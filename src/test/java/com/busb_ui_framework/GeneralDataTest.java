@@ -66,6 +66,8 @@ public class GeneralDataTest {
     @Test
     public void pricesFirstDate() {
 
+
+
         driver.findElement(By.id("affiliate_checkbox")).click();
         driver.findElement(By.id("origin-c1ty-input")).click();
         driver.findElement(By.cssSelector(".search-jss32")).click();
