@@ -63,7 +63,7 @@ public class GeneralDataTest {
         driver.quit();
     }
 
-    @Description("Taken data with first date")
+    @Description("Taken data with 2 days in future")
     @Test
     public void pricesFirstDate() throws InterruptedException {
 
@@ -77,16 +77,134 @@ public class GeneralDataTest {
         destinationInput.click();
         destinationInput.sendKeys("Destination City");
 
-        // Select the date two days in the future
+        // Select current date
         LocalDate currentDate = LocalDate.now();
         LocalDate futureDate = currentDate.plusDays(2);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String futureDateStr = formatter.format(futureDate);
+        System.out.println("Taken data with 2 days in future : " + futureDateStr);
+
+
+        // Splitting string date
+        String splitter[] = futureDateStr.split("-");
+        String month_year = splitter[1];
+        String day = splitter[0];
 
         WebElement dateInput = driver.findElement(By.id("outbound-date-input"));
         dateInput.click();
         Thread.sleep(3000);
-        dateInput.sendKeys(futureDateStr);
+
+        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
+
+
+        List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
+
+
+    }
+
+    @Description("Taken data with 5 days in future")
+    @Test
+    public void pricesSecondDate() throws InterruptedException {
+
+        driver.findElement(By.id("affiliate_checkbox")).click();
+
+        WebElement sourceInput = driver.findElement(By.id("origin-c1ty-input"));
+        WebElement destinationInput = driver.findElement(By.id("destination-c1ty-input"));
+
+        // Enter source and destination values
+        sourceInput.sendKeys("Source City");
+        destinationInput.click();
+        destinationInput.sendKeys("Destination City");
+
+        // Select the date five days in the future
+        LocalDate currentDate = LocalDate.now();
+        LocalDate futureDate = currentDate.plusDays(5);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String futureDateStr = formatter.format(futureDate);
+        System.out.println("Taken data with 5 days in future : " + futureDateStr);
+
+        // Splitting string date
+        String splitter[] = futureDateStr.split("-");
+        String month_year = splitter[1];
+        String day = splitter[0];
+
+        WebElement dateInput = driver.findElement(By.id("outbound-date-input"));
+        dateInput.click();
+        Thread.sleep(3000);
+
+
+        List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
+
+
+    }
+    @Description("Taken data with 20 days in future")
+    @Test
+    public void pricesThirdDate() throws InterruptedException {
+
+        driver.findElement(By.id("affiliate_checkbox")).click();
+
+        WebElement sourceInput = driver.findElement(By.id("origin-c1ty-input"));
+        WebElement destinationInput = driver.findElement(By.id("destination-c1ty-input"));
+
+        // Enter source and destination values
+        sourceInput.sendKeys("Source City");
+        destinationInput.click();
+        destinationInput.sendKeys("Destination City");
+
+        // Select the date twenty days in the future
+        LocalDate currentDate = LocalDate.now();
+        LocalDate futureDate = currentDate.plusDays(20);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String futureDateStr = formatter.format(futureDate);
+        System.out.println("Taken data with 20 days in future : " + futureDateStr);
+
+        // Splitting string date
+        String splitter[] = futureDateStr.split("-");
+        String month_year = splitter[1];
+        String day = splitter[0];
+
+        WebElement dateInput = driver.findElement(By.id("outbound-date-input"));
+        dateInput.click();
+        Thread.sleep(3000);
+
+
+        List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
+
+
+    }
+    @Description("Taken data with 40 days in future")
+    @Test
+    public void pricesFourthDate() throws InterruptedException {
+
+        driver.findElement(By.id("affiliate_checkbox")).click();
+
+        WebElement sourceInput = driver.findElement(By.id("origin-c1ty-input"));
+        WebElement destinationInput = driver.findElement(By.id("destination-c1ty-input"));
+
+        // Enter source and destination values
+        sourceInput.sendKeys("Source City");
+        destinationInput.click();
+        destinationInput.sendKeys("Destination City");
+
+        // Select the date forty days in the future
+        LocalDate currentDate = LocalDate.now();
+        LocalDate futureDate = currentDate.plusDays(40);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String futureDateStr = formatter.format(futureDate);
+        System.out.println("Taken data with 40 days in future : " + futureDateStr);
+
+        // Splitting string date
+        String splitter[] = futureDateStr.split("-");
+        String month_year = splitter[1];
+        String day = splitter[0];
+
+        WebElement dateInput = driver.findElement(By.id("outbound-date-input"));
+        dateInput.click();
+        Thread.sleep(3000);
+
+
+        List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
+
 
     }
 }
