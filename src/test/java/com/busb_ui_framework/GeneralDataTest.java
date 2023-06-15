@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static com.busb_ui_framework.general.ConfigurationManager.configuration;
 import static com.busb_ui_framework.pages.MainPage.getMainPage;
@@ -82,23 +83,34 @@ public class GeneralDataTest {
         LocalDate futureDate = currentDate.plusDays(2);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String futureDateStr = formatter.format(futureDate);
+        String currentDateStr = formatter.format(currentDate);
         System.out.println("Taken data with 2 days in future : " + futureDateStr);
 
+        // Splitting future string date
+        String splitterCurrentDate[] = currentDateStr.split("-");
+        String current_month_year = splitterCurrentDate[1];
+        String currentDay = splitterCurrentDate[0];
 
-        // Splitting string date
-        String splitter[] = futureDateStr.split("-");
-        String month_year = splitter[1];
-        String day = splitter[0];
+
+        // Splitting future string date
+        String splitterFuture[] = futureDateStr.split("-");
+        String month_year = splitterFuture[1];
+        String day = splitterFuture[0];
 
         WebElement dateInput = driver.findElement(By.id("outbound-date-input"));
         dateInput.click();
         Thread.sleep(3000);
 
-        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
-
-
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
+
+        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
+        if (Objects.equals(month_year, current_month_year)) {
+            //wyszukaj w tablicy dzien i kliknij
+        } else {
+            // wyszukaj element do zminy miesiąca i kliknij
+            //wyszukaj w tablicy dzień i kliknij
+        }
 
     }
 
@@ -121,7 +133,14 @@ public class GeneralDataTest {
         LocalDate futureDate = currentDate.plusDays(5);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String futureDateStr = formatter.format(futureDate);
+        String currentDateStr = formatter.format(currentDate);
+
         System.out.println("Taken data with 5 days in future : " + futureDateStr);
+
+        // Splitting future string date
+        String splitterCurrentDate[] = currentDateStr.split("-");
+        String current_month_year = splitterCurrentDate[1];
+        String currentDay = splitterCurrentDate[0];
 
         // Splitting string date
         String splitter[] = futureDateStr.split("-");
@@ -132,9 +151,16 @@ public class GeneralDataTest {
         dateInput.click();
         Thread.sleep(3000);
 
-
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
+
+        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
+        if (Objects.equals(month_year, current_month_year)) {
+            //wyszukaj w tablicy dzien i kliknij
+        } else {
+            // wyszukaj element do zminy miesiąca i kliknij
+            //wyszukaj w tablicy dzień i kliknij
+        }
 
     }
     @Description("Taken data with 20 days in future")
@@ -156,7 +182,14 @@ public class GeneralDataTest {
         LocalDate futureDate = currentDate.plusDays(20);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String futureDateStr = formatter.format(futureDate);
+        String currentDateStr = formatter.format(currentDate);
+
         System.out.println("Taken data with 20 days in future : " + futureDateStr);
+
+        // Splitting future string date
+        String splitterCurrentDate[] = currentDateStr.split("-");
+        String current_month_year = splitterCurrentDate[1];
+        String currentDay = splitterCurrentDate[0];
 
         // Splitting string date
         String splitter[] = futureDateStr.split("-");
@@ -167,9 +200,16 @@ public class GeneralDataTest {
         dateInput.click();
         Thread.sleep(3000);
 
-
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
+
+        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
+        if (Objects.equals(month_year, current_month_year)) {
+            //wyszukaj w tablicy dzien i kliknij
+        } else {
+            // wyszukaj element do zminy miesiąca i kliknij
+            //wyszukaj w tablicy dzień i kliknij
+        }
 
     }
     @Description("Taken data with 40 days in future")
@@ -191,7 +231,14 @@ public class GeneralDataTest {
         LocalDate futureDate = currentDate.plusDays(40);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String futureDateStr = formatter.format(futureDate);
+        String currentDateStr = formatter.format(currentDate);
+
         System.out.println("Taken data with 40 days in future : " + futureDateStr);
+
+        // Splitting future string date
+        String splitterCurrentDate[] = currentDateStr.split("-");
+        String current_month_year = splitterCurrentDate[1];
+        String currentDay = splitterCurrentDate[0];
 
         // Splitting string date
         String splitter[] = futureDateStr.split("-");
@@ -202,9 +249,16 @@ public class GeneralDataTest {
         dateInput.click();
         Thread.sleep(3000);
 
-
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
+
+        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
+        if (Objects.equals(month_year, current_month_year)) {
+            //wyszukaj w tablicy dzien i kliknij
+        } else {
+            // wyszukaj element do zminy miesiąca i kliknij
+            //wyszukaj w tablicy dzień i kliknij
+        }
 
     }
 }
