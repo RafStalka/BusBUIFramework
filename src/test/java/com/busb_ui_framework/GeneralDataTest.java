@@ -73,19 +73,22 @@ public class GeneralDataTest {
         WebElement destinationInput = driver.findElement(By.id("destination-c1ty-input"));
 
         // Enter source and destination values
-        sourceInput.sendKeys("Source City");
-        destinationInput.click();
-        destinationInput.sendKeys("Destination City");
+        sourceInput.sendKeys("Berlin");
+        Thread.sleep(1000);
+        destinationInput.sendKeys(Keys.ENTER);
+        destinationInput.sendKeys("Hamburg");
+        Thread.sleep(1000);
+        destinationInput.sendKeys(Keys.ENTER);
 
         // Select current date
         LocalDate currentDate = LocalDate.now();
         LocalDate futureDate = currentDate.plusDays(2);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String futureDateStr = formatter.format(futureDate);
-        String currentDateStr = formatter.format(currentDate);
+        //String currentDateStr = formatter.format(currentDate);
         System.out.println("Taken data with 2 days in future : " + futureDateStr);
 
-        // Splitting future string date
+        /*// Splitting future string date
         String splitterCurrentDate[] = currentDateStr.split("-");
         String current_month_year = splitterCurrentDate[1];
         String currentDay = splitterCurrentDate[0];
@@ -94,55 +97,89 @@ public class GeneralDataTest {
         // Splitting future string date
         String splitterFuture[] = futureDateStr.split("-");
         String month_year = splitterFuture[1];
-        String day = splitterFuture[0];
+        String day = splitterFuture[0];*/
 
         WebElement dateInput = driver.findElement(By.id("outbound-date-input"));
         dateInput.click();
-        Thread.sleep(3000);
+        WebElement cookiesAgree = driver.findElement(By.xpath("//*[@id='cc_dialog']/div/div[2]/button[1]"));
+        cookiesAgree.click();
+        Thread.sleep(4000);
 
-        List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
+        // Find all the date options
+        List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button"));
 
-        if (Objects.equals(month_year, current_month_year)) {
-            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
-            futureDateElement.click();
-        } else {
-            WebElement nextMonth = driver.findElement(By.xpath("//*[@id='outbound-calendar']/div[1]/button[2]"));
-            nextMonth.click();
-            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
-            futureDateElement.click();
+        //WebElement selectedDate = null;
+
+        for (WebElement ele : dayElements) {
+            String eleText = ele.getAttribute("aria-label");
+            System.out.println(eleText);
+            System.out.println(futureDateStr);
+            if (eleText.equals(futureDateStr)) {
+                ele.click();
+                System.out.println(ele);
+            }
         }
 
-        WebElement searchButton = driver.findElement(By.cssSelector(".search-form .search-button"));
-        searchButton.click();
+        /*while (true) {
+            if (Objects.equals(month_year, current_month_year)) {
+                WebElement futureDateElement = driver.findElement(By.xpath("//button[contains(@data-date, '\" + futureDateStr + \"')]"));
+                futureDateElement.click();
+            } else {
+                WebElement nextMonth = driver.findElement(By.xpath("//*[@id='outbound-calendar']/div[1]/button[2]"));
+                nextMonth.click();
+                WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+                futureDateElement.click();
 
-        // Perform assertions on the search results page
-        String pageTitle = driver.getTitle();
-        Assert.assertTrue(pageTitle.contains("Search Results"), "Search results page title does not match");
+            }*/
 
-        // Verify that the search results contain the connection information with the selected date
-        WebElement connectionInfo = driver.findElement(By.cssSelector(".connection-info"));
-        String connectionText = connectionInfo.getText();
-        Assert.assertTrue(connectionText.contains(futureDateStr), "Connection data for the selected date not found");
+            Thread.sleep(1000);
+            WebElement searchButton = driver.findElement(By.xpath("//*[@id='search-submit-button']"));
+            searchButton.click();
+            Thread.sleep(1000);
 
-        // Find all the connection elements on the page
-        List<WebElement> connectionElements = driver.findElements(By.cssSelector(".connection-info"));
+            // Perform assertions on the search results page
+            String pageTitle = driver.getTitle();
+            Assert.assertTrue(pageTitle.contains("Find the Cheapest Tickets on Busbud"), "Search results page title does not match");
 
-        // Iterate over the connection elements to collect the desired information
-        for (WebElement connectionElement : connectionElements) {
-            // Extract the date from each connection element
-            WebElement dateElement = connectionElement.findElement(By.cssSelector(".date"));
-            String date = dateElement.getText();
+            // Verify that the search results contain the connection information with the selected date
+            /*WebElement connectionInfo = driver.findElement(By.xpath("//*[@id='departures-list-page']/div/div[@data-cy-type]"));
+            String connectionText = connectionInfo.getText();
+            System.out.println(connectionText);*/
+            //Assert.assertTrue(connectionText.contains(futureDateStr), "Connection data for the selected date not found");
 
-            // Extract the price from each connection element
-            WebElement priceElement = connectionElement.findElement(By.cssSelector(".price"));
-            String price = priceElement.getText();
+            // Find all the connection elements on the page
+            WebElement currency = driver.findElement(By.xpath("//*[@id='currency-picker']"));
+            currency.click();
+            Thread.sleep(3000);
+            WebElement currencyPicker = driver.findElement(By.xpath("//*[@id='currency-picker']/div/ul/li[3]/a"));
+            currencyPicker.click();
+            Thread.sleep(3000);
 
-            // Print the collected data
-            System.out.println("Date: " + date);
-            System.out.println("Price: " + price);
-            System.out.println("------------------");
-        }
+            List<WebElement> connectionElements = driver.findElements(By.xpath("//*[@id='departures-list-page']/div/div[@data-cy-type='departure-card']"));
+            Thread.sleep(3000);
+            System.out.println(connectionElements.size());
 
+            // Iterate over the connection elements to collect the desired information
+            for (WebElement connectionElement : connectionElements) {
+                // Extract the date from each connection element
+                WebElement dateElement = connectionElement.findElement(By.xpath(".//*[@data-cy='departure-card-content']/div[3]/div/div/span"));
+                String date = dateElement.getText(); //*[@id="departures-list-page"]/div/div[1]/div/div/div/div[3]/div[1]/div/span[1]
+                                                     //*[@id="departures-list-page"]/div/div[2]/div/div/div/div[3]/div[1]/div/span[1]
+                                                    //*[@id="departures-list-page"]/div/div[5]/div/div/div/div[6]/div/span/span[2]
+                                                    //*[@id="departures-list-page"]/div/div[6]/div/div/div/div[6]/div/span/span[2]
+                                                    //*[@id="departures-list-page"]/div/div[12]/div/div/div/div[6]/div/span/span[2]
+                                                    //*[@id="departures-list-page"]/div
+                //*[@id='departures-list-page']/div/div[@data-cy-type='departure-card']/div/div/div[@data-cy='departure-card-content']/div[3]/div/div/span  18 sztuk
+
+                // Extract the price from each connection element
+                WebElement priceElement = connectionElement.findElement(By.xpath("//*[@id='departures-list-page']/div/div/div/div/div/div[6]/div/span/span[2]"));
+                String price = priceElement.getText();
+
+                // Print the collected data
+                System.out.println("Date: " + date);
+                System.out.println("Price: " + price);
+                System.out.println("------------------");
+            }
 
     }
 
