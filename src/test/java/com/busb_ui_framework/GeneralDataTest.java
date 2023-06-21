@@ -6,6 +6,7 @@ import com.busb_ui_framework.pages.MainPage;
 import io.qameta.allure.Description;
 import org.openqa.selenium.*;
 import org.openqa.selenium.io.FileHandler;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
@@ -14,12 +15,10 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -103,14 +102,47 @@ public class GeneralDataTest {
 
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
-
-        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
         if (Objects.equals(month_year, current_month_year)) {
-            //wyszukaj w tablicy dzien i kliknij
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
         } else {
-            // wyszukaj element do zminy miesiąca i kliknij
-            //wyszukaj w tablicy dzień i kliknij
+            WebElement nextMonth = driver.findElement(By.xpath("//*[@id='outbound-calendar']/div[1]/button[2]"));
+            nextMonth.click();
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
         }
+
+        WebElement searchButton = driver.findElement(By.cssSelector(".search-form .search-button"));
+        searchButton.click();
+
+        // Perform assertions on the search results page
+        String pageTitle = driver.getTitle();
+        Assert.assertTrue(pageTitle.contains("Search Results"), "Search results page title does not match");
+
+        // Verify that the search results contain the connection information with the selected date
+        WebElement connectionInfo = driver.findElement(By.cssSelector(".connection-info"));
+        String connectionText = connectionInfo.getText();
+        Assert.assertTrue(connectionText.contains(futureDateStr), "Connection data for the selected date not found");
+
+        // Find all the connection elements on the page
+        List<WebElement> connectionElements = driver.findElements(By.cssSelector(".connection-info"));
+
+        // Iterate over the connection elements to collect the desired information
+        for (WebElement connectionElement : connectionElements) {
+            // Extract the date from each connection element
+            WebElement dateElement = connectionElement.findElement(By.cssSelector(".date"));
+            String date = dateElement.getText();
+
+            // Extract the price from each connection element
+            WebElement priceElement = connectionElement.findElement(By.cssSelector(".price"));
+            String price = priceElement.getText();
+
+            // Print the collected data
+            System.out.println("Date: " + date);
+            System.out.println("Price: " + price);
+            System.out.println("------------------");
+        }
+
 
     }
 
@@ -153,13 +185,45 @@ public class GeneralDataTest {
 
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
-
-        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
         if (Objects.equals(month_year, current_month_year)) {
-            //wyszukaj w tablicy dzien i kliknij
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
         } else {
-            // wyszukaj element do zminy miesiąca i kliknij
-            //wyszukaj w tablicy dzień i kliknij
+            WebElement nextMonth = driver.findElement(By.xpath("//*[@id='outbound-calendar']/div[1]/button[2]"));
+            nextMonth.click();
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
+        }
+
+        WebElement searchButton = driver.findElement(By.cssSelector(".search-form .search-button"));
+        searchButton.click();
+
+        // Perform assertions on the search results page
+        String pageTitle = driver.getTitle();
+        Assert.assertTrue(pageTitle.contains("Search Results"), "Search results page title does not match");
+
+        // Verify that the search results contain the connection information with the selected date
+        WebElement connectionInfo = driver.findElement(By.cssSelector(".connection-info"));
+        String connectionText = connectionInfo.getText();
+        Assert.assertTrue(connectionText.contains(futureDateStr), "Connection data for the selected date not found");
+
+        // Find all the connection elements on the page
+        List<WebElement> connectionElements = driver.findElements(By.cssSelector(".connection-info"));
+
+        // Iterate over the connection elements to collect the desired information
+        for (WebElement connectionElement : connectionElements) {
+            // Extract the date from each connection element
+            WebElement dateElement = connectionElement.findElement(By.cssSelector(".date"));
+            String date = dateElement.getText();
+
+            // Extract the price from each connection element
+            WebElement priceElement = connectionElement.findElement(By.cssSelector(".price"));
+            String price = priceElement.getText();
+
+            // Print the collected data
+            System.out.println("Date: " + date);
+            System.out.println("Price: " + price);
+            System.out.println("------------------");
         }
 
     }
@@ -202,13 +266,45 @@ public class GeneralDataTest {
 
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
-
-        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
         if (Objects.equals(month_year, current_month_year)) {
-            //wyszukaj w tablicy dzien i kliknij
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
         } else {
-            // wyszukaj element do zminy miesiąca i kliknij
-            //wyszukaj w tablicy dzień i kliknij
+            WebElement nextMonth = driver.findElement(By.xpath("//*[@id='outbound-calendar']/div[1]/button[2]"));
+            nextMonth.click();
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
+        }
+
+        WebElement searchButton = driver.findElement(By.cssSelector(".search-form .search-button"));
+        searchButton.click();
+
+        // Perform assertions on the search results page
+        String pageTitle = driver.getTitle();
+        Assert.assertTrue(pageTitle.contains("Search Results"), "Search results page title does not match");
+
+        // Verify that the search results contain the connection information with the selected date
+        WebElement connectionInfo = driver.findElement(By.cssSelector(".connection-info"));
+        String connectionText = connectionInfo.getText();
+        Assert.assertTrue(connectionText.contains(futureDateStr), "Connection data for the selected date not found");
+
+        // Find all the connection elements on the page
+        List<WebElement> connectionElements = driver.findElements(By.cssSelector(".connection-info"));
+
+        // Iterate over the connection elements to collect the desired information
+        for (WebElement connectionElement : connectionElements) {
+            // Extract the date from each connection element
+            WebElement dateElement = connectionElement.findElement(By.cssSelector(".date"));
+            String date = dateElement.getText();
+
+            // Extract the price from each connection element
+            WebElement priceElement = connectionElement.findElement(By.cssSelector(".price"));
+            String price = priceElement.getText();
+
+            // Print the collected data
+            System.out.println("Date: " + date);
+            System.out.println("Price: " + price);
+            System.out.println("------------------");
         }
 
     }
@@ -251,13 +347,45 @@ public class GeneralDataTest {
 
         List<WebElement> dayElements = driver.findElements(By.xpath("//*[@id='outbound-calendar']/div[3]/button[@tabindex='0']"));
 
-
-        //*[@id='outbound-calendar']/div[3][contains(@data-month,'month-')]
         if (Objects.equals(month_year, current_month_year)) {
-            //wyszukaj w tablicy dzien i kliknij
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
         } else {
-            // wyszukaj element do zminy miesiąca i kliknij
-            //wyszukaj w tablicy dzień i kliknij
+            WebElement nextMonth = driver.findElement(By.xpath("//*[@id='outbound-calendar']/div[1]/button[2]"));
+            nextMonth.click();
+            WebElement futureDateElement = driver.findElement(By.xpath("//td[@data-date='" + futureDateStr + "']"));
+            futureDateElement.click();
+        }
+
+        WebElement searchButton = driver.findElement(By.cssSelector(".search-form .search-button"));
+        searchButton.click();
+
+        // Perform assertions on the search results page
+        String pageTitle = driver.getTitle();
+        Assert.assertTrue(pageTitle.contains("Search Results"), "Search results page title does not match");
+
+        // Verify that the search results contain the connection information with the selected date
+        WebElement connectionInfo = driver.findElement(By.cssSelector(".connection-info"));
+        String connectionText = connectionInfo.getText();
+        Assert.assertTrue(connectionText.contains(futureDateStr), "Connection data for the selected date not found");
+
+        // Find all the connection elements on the page
+        List<WebElement> connectionElements = driver.findElements(By.cssSelector(".connection-info"));
+
+        // Iterate over the connection elements to collect the desired information
+        for (WebElement connectionElement : connectionElements) {
+            // Extract the date from each connection element
+            WebElement dateElement = connectionElement.findElement(By.cssSelector(".date"));
+            String date = dateElement.getText();
+
+            // Extract the price from each connection element
+            WebElement priceElement = connectionElement.findElement(By.cssSelector(".price"));
+            String price = priceElement.getText();
+
+            // Print the collected data
+            System.out.println("Date: " + date);
+            System.out.println("Price: " + price);
+            System.out.println("------------------");
         }
 
     }
