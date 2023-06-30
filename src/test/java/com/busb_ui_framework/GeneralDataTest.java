@@ -19,6 +19,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -158,6 +159,7 @@ public class GeneralDataTest {
             List<WebElement> connectionElements = driver.findElements(By.xpath("//*[@id='departures-list-page']/div/div[@data-cy-type='departure-card']"));
             Thread.sleep(3000);
             System.out.println(connectionElements.size());
+            Thread.sleep(3000);
 
             // Iterate over the connection elements to collect the desired information
             for (WebElement connectionElement : connectionElements) {
@@ -174,6 +176,31 @@ public class GeneralDataTest {
                 // Extract the price from each connection element
                 WebElement priceElement = connectionElement.findElement(By.xpath("//*[@id='departures-list-page']/div/div/div/div/div/div[6]/div/span/span[2]"));
                 String price = priceElement.getText();
+
+                // Find the elements containing the price and date values
+                //*[@id="departures-list-page"]/div/div[1]/div/div/div[1]/div/div/span
+                //*[@id="departures-list-page"]/div/div[2]/div/div/div[1]/div/div/span
+                //*[@id="departures-list-page"]/div/div[3]/div/div/div[1]/div/div/span
+                //*[@id="departures-list-page"]/div/div[5]/div/div/div[1]/div/div/span
+                List<WebElement> priceElements = driver.findElements(By.cssSelector(".price"));
+                List<WebElement> dateElements = driver.findElements(By.cssSelector(".date"));
+
+                // Create lists to store the extracted values
+                List<String> prices = new ArrayList<>();
+                List<String> dates = new ArrayList<>();
+
+                // Extract the price values
+                for (WebElement priceElement : priceElements) {
+                    String price = priceElement.getText();
+                    prices.add(price);
+                }
+
+                // Extract the date values
+                for (WebElement dateElement : dateElements) {
+                    String date = dateElement.getText();
+                    dates.add(date);
+                }
+
 
                 // Print the collected data
                 System.out.println("Date: " + date);
